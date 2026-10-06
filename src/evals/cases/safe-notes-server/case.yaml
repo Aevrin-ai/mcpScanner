@@ -1,0 +1,8 @@
+name: safe-notes-server
+description: A small notes server with harmless tools, a prompt, and a resource.
+malicious: false
+target: "{python} {root}/../../tests/fixtures/servers/safe_server.py"
+dynamic: true
+tags: [benign]
+expect:
+  max_grade: A

@@ -1,0 +1,8 @@
+name: leaky-tools-file
+description: Offline tools file with a key in a default value, raw SQL, and a shell tool.
+malicious: true
+target: "{root}/tools/leaky_tools.json"
+tags: [offline, secrets]
+expect:
+  must_find: [MCP-SECRET-001, MCP-SQL-001, MCP-EXEC-001]
+  min_grade: D

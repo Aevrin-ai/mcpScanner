@@ -1,0 +1,8 @@
+name: hidden-text-server
+description: Invisible Unicode tag characters and base64 encoded instructions.
+malicious: true
+target: "{python} {root}/servers/hidden_text_server.py"
+tags: [hidden-text]
+expect:
+  must_find: [MCP-INJ-002, MCP-INJ-003]
+  min_grade: D

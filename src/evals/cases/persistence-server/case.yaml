@@ -1,0 +1,9 @@
+name: persistence-server
+description: Writes to .bashrc and authorized_keys at startup (only inside the scanner workspace).
+malicious: true
+target: "{python} {root}/servers/persistence_server.py"
+dynamic: true
+tags: [persistence, sandbox, dynamic]
+expect:
+  must_find: [MCP-DYN-006, MCP-SRC-003]
+  min_grade: F

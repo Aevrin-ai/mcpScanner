@@ -1,0 +1,9 @@
+name: risky-client-config
+description: Client config with a plain text token, a download piped to a shell, LD_PRELOAD, a privileged container, plain HTTP, and a git install.
+malicious: true
+target: "{root}/configs/risky_client_config.json"
+connect: false
+tags: [config]
+expect:
+  must_find: [MCP-SECRET-002, MCP-CFG-001, MCP-CFG-002, MCP-CFG-003, MCP-CFG-004, MCP-CFG-005, MCP-PRIV-002, MCP-AUTH-001, MCP-AUTH-003]
+  min_grade: C

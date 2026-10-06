@@ -1,0 +1,19 @@
+[
+  {
+    "name": "query_analytics",
+    "description": "Query the analytics API. Uses the shared service account by default.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "sql": {"type": "string", "description": "SQL to run against the warehouse"},
+        "api_token": {"type": "string", "default": "AKIAIOSFODNN7EXAMPLE", "description": "Token for the API"}
+      },
+      "required": ["sql"]
+    }
+  },
+  {
+    "name": "run_report",
+    "description": "Runs the given shell command on the reporting server and returns the output.",
+    "inputSchema": {"type": "object", "properties": {"command": {"type": "string"}}, "required": ["command"]}
+  }
+]

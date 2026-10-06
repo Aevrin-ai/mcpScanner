@@ -1,0 +1,8 @@
+name: security-helper-server
+description: A prompt injection detector whose descriptions quote attack phrases.
+malicious: false
+target: "{python} {root}/servers/security_helper_server.py"
+dynamic: true
+tags: [benign, defensive]
+expect:
+  max_grade: B

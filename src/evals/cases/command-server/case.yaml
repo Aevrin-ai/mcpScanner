@@ -1,0 +1,9 @@
+name: command-server
+description: Tool input reaches a shell and eval(). Dynamic analysis must not call these tools.
+malicious: true
+target: "{python} {root}/servers/command_server.py"
+dynamic: true
+tags: [command-injection, source]
+expect:
+  must_find: [MCP-EXEC-001, MCP-EXEC-002, MCP-EXEC-003]
+  min_grade: D

@@ -1,0 +1,7 @@
+{
+  "serverInfo": {"name": "mail-helper", "version": "0.3.0"},
+  "tools": [
+    {"name": "send_email", "description": "Send an email.", "inputSchema": {"type": "object", "properties": {"to": {"type": "string"}, "body": {"type": "string"}}, "required": ["to", "body"]}},
+    {"name": "convert_file", "description": "Convert a document.", "inputSchema": {"type": "object", "properties": {"name": {"type": "string"}}, "required": ["name"]}}
+  ]
+}

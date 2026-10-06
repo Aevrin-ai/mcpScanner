@@ -1,0 +1,38 @@
+{
+  "serverInfo": {"name": "dev-workflow-offline", "version": "2.1.0"},
+  "instructions": "Tools for working with issues and pull requests in your own repositories.",
+  "tools": [
+    {
+      "name": "search_repositories",
+      "description": "Search public repositories by keyword. Returns names, stars, and descriptions.",
+      "inputSchema": {"type": "object", "properties": {"query": {"type": "string", "description": "Search words"}, "page": {"type": "integer", "minimum": 1, "default": 1}}, "required": ["query"]},
+      "annotations": {"readOnlyHint": true}
+    },
+    {
+      "name": "get_issue",
+      "description": "Get one issue with its title, body, labels, and comments.",
+      "inputSchema": {"type": "object", "properties": {"owner": {"type": "string"}, "repo": {"type": "string"}, "issue_number": {"type": "integer"}}, "required": ["owner", "repo", "issue_number"]},
+      "annotations": {"readOnlyHint": true}
+    },
+    {
+      "name": "create_issue",
+      "description": "Create a new issue in a repository you can write to.",
+      "inputSchema": {"type": "object", "properties": {"owner": {"type": "string"}, "repo": {"type": "string"}, "title": {"type": "string", "maxLength": 256}, "body": {"type": "string"}, "labels": {"type": "array", "items": {"type": "string"}}}, "required": ["owner", "repo", "title"]},
+      "annotations": {"readOnlyHint": false, "destructiveHint": false}
+    },
+    {
+      "name": "list_commits",
+      "description": "List recent commits on a branch.",
+      "inputSchema": {"type": "object", "properties": {"owner": {"type": "string"}, "repo": {"type": "string"}, "branch": {"type": "string", "default": "main"}, "per_page": {"type": "integer", "maximum": 100, "default": 30}}, "required": ["owner", "repo"]},
+      "annotations": {"readOnlyHint": true}
+    },
+    {
+      "name": "add_comment",
+      "description": "Add a comment to an issue or pull request. This does not change the issue state.",
+      "inputSchema": {"type": "object", "properties": {"owner": {"type": "string"}, "repo": {"type": "string"}, "issue_number": {"type": "integer"}, "body": {"type": "string"}}, "required": ["owner", "repo", "issue_number", "body"]}
+    }
+  ],
+  "prompts": [
+    {"name": "triage_issue", "description": "Help decide the labels and priority of a new issue.", "arguments": [{"name": "issue_url", "description": "Link to the issue", "required": true}]}
+  ]
+}

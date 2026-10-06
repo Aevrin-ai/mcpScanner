@@ -1,0 +1,9 @@
+name: output-injection-server
+description: Clean metadata, but a tool returns injected instructions and the server asks for roots.
+malicious: true
+target: "{python} {root}/servers/output_injection_server.py"
+dynamic: true
+tags: [output-injection, protocol, dynamic]
+expect:
+  must_find: [MCP-INJ-004, MCP-PROTO-001]
+  min_grade: D

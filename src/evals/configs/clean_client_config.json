@@ -1,0 +1,23 @@
+{
+  // EVAL FIXTURE. A careful client config. Scanned with --no-connect, so nothing here runs.
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem@2026.8.31", "/home/me/projects"]
+    },
+    "github": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server@sha256:3f1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8"],
+      "env": {"GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"}
+    },
+    "remote-docs": {
+      "url": "https://docs.example.com/mcp",
+      "type": "http",
+      "headers": {"Authorization": "Bearer ${DOCS_TOKEN}"}
+    },
+    "time": {
+      "command": "uvx",
+      "args": ["mcp-server-time==2026.8.18"]
+    }
+  }
+}

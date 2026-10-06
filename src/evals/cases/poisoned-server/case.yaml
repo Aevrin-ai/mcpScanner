@@ -1,0 +1,10 @@
+name: poisoned-server
+description: Tool descriptions hide orders, ask for a secret file, and try to steer another tool.
+malicious: true
+target: "{python} {root}/servers/poisoned_server.py"
+source: "{root}/servers/poisoned_server.py"
+tags: [poisoning, shadowing]
+expect:
+  must_find: [MCP-POISON-001, MCP-POISON-002, MCP-POISON-003, MCP-POISON-005, MCP-SHADOW-001, MCP-SHADOW-002]
+  must_not_find: [MCP-SCOPE-001, MCP-EXEC]
+  min_grade: D

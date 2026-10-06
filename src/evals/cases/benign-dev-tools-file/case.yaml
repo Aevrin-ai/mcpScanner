@@ -1,0 +1,9 @@
+name: benign-dev-tools-file
+description: Offline tools file of a normal issue tracker integration.
+malicious: false
+target: "{root}/tools/benign_dev_tools.json"
+tags: [offline, benign]
+expect:
+  must_not_find: [MCP-POISON, MCP-INJ, MCP-SHADOW, MCP-EXEC]
+  max_grade: B
+  allow: [MCP-PERM, MCP-QUALITY]

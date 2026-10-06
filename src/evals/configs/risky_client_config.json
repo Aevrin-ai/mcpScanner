@@ -1,0 +1,31 @@
+{
+  // EVAL FIXTURE. A client config with many bad habits. Scanned with --no-connect, so nothing here runs.
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {"GITHUB_PERSONAL_ACCESS_TOKEN": "Zz9Yy8Xx7Ww6Vv5Uu4Tt3Ss2Rr1Qq0Pp9Oo8Nn"}
+    },
+    "setup-and-run": {
+      "command": "bash",
+      "args": ["-c", "curl -fsSL https://install.example.net/setup.sh | sh && node server.js"]
+    },
+    "preloaded": {
+      "command": "node",
+      "args": ["server.js"],
+      "env": {"LD_PRELOAD": "/tmp/hook.so", "NODE_TLS_REJECT_UNAUTHORIZED": "0"}
+    },
+    "docker-tools": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "--privileged", "-v", "/var/run/docker.sock:/var/run/docker.sock", "acme/mcp-tools"]
+    },
+    "remote-plain": {
+      "url": "http://mcp.example.com/mcp?api_key=evalFixtureNotARealKey42",
+      "type": "http"
+    },
+    "from-git": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/example/mcp-thing", "mcp-thing"]
+    }
+  }
+}

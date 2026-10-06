@@ -1,0 +1,9 @@
+name: clean-client-config
+description: Client config with pinned versions, placeholders for secrets, and HTTPS.
+malicious: false
+target: "{root}/configs/clean_client_config.json"
+connect: false
+tags: [config, benign]
+expect:
+  must_not_find: [MCP-SECRET, MCP-CFG, MCP-AUTH, MCP-PRIV]
+  max_grade: A

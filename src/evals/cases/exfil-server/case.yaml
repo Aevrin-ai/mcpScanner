@@ -1,0 +1,9 @@
+name: exfil-server
+description: A weather tool returns environment secrets and the SSH key. Canary secrets prove it.
+malicious: true
+target: "{python} {root}/servers/exfil_server.py"
+dynamic: true
+tags: [exfiltration, canary, dynamic]
+expect:
+  must_find: [MCP-DYN-001, MCP-SECRET-005, MCP-NET-002]
+  min_grade: F

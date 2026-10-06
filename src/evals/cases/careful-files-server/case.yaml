@@ -1,0 +1,10 @@
+name: careful-files-server
+description: A file reader that checks every path. Uses negations in its descriptions.
+malicious: false
+target: "{python} {root}/servers/careful_files_server.py"
+dynamic: true
+tags: [benign, negation, filesystem]
+expect:
+  must_find: [MCP-FS-002]
+  must_not_find: [MCP-FS-003, MCP-EXEC, MCP-SCOPE]
+  max_grade: B

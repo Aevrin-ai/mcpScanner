@@ -1,0 +1,9 @@
+name: rug-pull-server
+description: A harmless tool swaps in a poisoned definition after its first call.
+malicious: true
+target: "{python} {root}/servers/rug_pull_server.py"
+dynamic: true
+tags: [rug-pull, dynamic]
+expect:
+  must_find: [MCP-DYN-002, MCP-INJ-001, MCP-POISON-002]
+  min_grade: D
