@@ -1,0 +1,51 @@
+# Run the scanner with locked down container settings.
+#
+#   docker compose run --rm scanner scan /work/targets/tools.json
+#   docker compose run --rm scanner scan "npx -y some-mcp-server@1.2.3" --dynamic
+#   docker compose run --rm evals
+#
+# Put the files you want to scan in ./targets. Reports land in ./reports.
+# See docs/docker.md for what each setting does.
+
+x-locked-down: &locked-down
+  build: .
+  image: aevrin-mcp-scanner:latest
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  pids_limit: 256
+  mem_limit: 2g
+  cpus: 2
+  tmpfs:
+    - /tmp:size=512m
+    - /home/scanner:size=512m,uid=10001,gid=10001
+  env_file:
+    - path: .env
+      required: false
+
+services:
+  scanner:
+    <<: *locked-down
+    volumes:
+      - ./targets:/work/targets:ro
+      - ./reports:/work/reports
+    # Package runners (npx, uvx) need the network to download servers.
+    # Use "none" when you only scan tools files or configs.
+    network_mode: bridge
+    # Commercial use: save your license key as ./aevrin.lic, then uncomment these lines and
+    # the "secrets:" block at the end. Online licenses also need a stable installation id:
+    # set AEVRIN_INSTALLATION_ID=<a UUID> in .env. See docs/licensing.md.
+    # secrets: [aevrin_license]
+
+  evals:
+    <<: *locked-down
+    entrypoint: ["mcp-scanner", "eval", "--root", "/work/src/evals", "--allow-host", "--output", "/work/reports/evals"]
+    volumes:
+      - ./src/evals:/work/src/evals:ro
+      - ./tests/fixtures:/work/tests/fixtures:ro
+      - ./reports:/work/reports
+    network_mode: none
+
+# secrets:
+#   aevrin_license:
+#     file: ./aevrin.lic
