@@ -1,0 +1,28 @@
+# Example GitHub Actions workflow. Copy to .github/workflows/mcp-scan.yml.
+# It scans a saved tools list and the server source code, fails the build on high
+# findings, and uploads SARIF so findings show up in the Security tab.
+
+name: MCP security scan
+on: [pull_request, push]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install aevrin-mcp-scanner
+      - name: Scan
+        run: |
+          mcp-scanner scan tools.json --source src \
+            --format json --format sarif --output mcp-scan-results --fail-on high
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: mcp-scan-results

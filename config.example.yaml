@@ -1,0 +1,88 @@
+# Aevrin MCP Scanner settings. Copy to mcp-scanner.yaml and change what you need.
+# Every key is optional. Unknown keys are an error, so typos are caught early.
+# API keys never go in this file. Put them in your environment or a .env file.
+
+scan:
+  min_severity: info          # hide findings below this: info, low, medium, high, critical
+  fail_on: high               # exit code 1 at or above this severity ("none" to never fail)
+  source_path: null           # folder with server source code, for code checks
+  pins_file: ~/.aevrin-mcp-scanner/pins.json
+  connect: true               # false: only check config, source, and dependencies
+  prescanned_fallback: true   # when a scan cannot finish, show a public report from an earlier scan
+
+timeouts:
+  startup: 60                 # seconds for the server to start and answer initialize
+  request: 30                 # seconds for one MCP request
+  tool_call: 20               # seconds for one dynamic tool call
+  server_total: 600           # hard limit for one server
+
+sandbox:
+  mode: auto                  # auto (Docker when it can), docker, or process
+  allow_host: false           # allow the process sandbox without asking
+  network: none               # Docker sandbox network: none, allow, or auto
+  memory_mb: 1024
+  install_memory_mb: 4096     # memory for the install step of --run (builds need more)
+  max_processes: 32
+  cpu_seconds: 300
+  max_message_mb: 16
+  isolate_home: true          # fake home folder with decoy secrets
+  env_passthrough: []         # host variables the server may see, by name
+  docker_image: null          # force one image for every server
+  docker_image_node: node:22-slim
+  docker_image_python: ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+  # Install step images for --run repositories: the same systems plus git and compilers.
+  docker_install_image_node: node:22
+  docker_install_image_python: ghcr.io/astral-sh/uv:python3.12-bookworm
+  keep_workspace: false
+
+dynamic:
+  enabled: false              # same as --dynamic
+  call_tools: true            # call tools that look safe
+  call_dangerous_tools: false # never turn this on outside a throwaway sandbox
+  max_tool_calls: 25
+  read_prompts: true
+  read_resources: true
+  max_content_chars: 100000
+
+rules:
+  enabled: []                 # empty means all rules. IDs or prefixes, like MCP-EXEC
+  disabled: []
+  severity_overrides: {}      # for example: {MCP-PERM-002: medium}
+  rules_dirs: []              # folders with YAML rules
+
+ai:
+  enabled: false
+  provider: null              # openai, anthropic, xai, or openrouter
+  model: null                 # default: gpt-5.5, claude-sonnet-5-5, grok-4.6, or anthropic/claude-sonnet-5.5 (openrouter)
+  timeout: 60
+  max_retries: 2
+  max_calls: 20               # per scan
+  max_input_chars: 24000
+  max_output_tokens: 2000
+  review_findings: true
+  review_tools: true
+  pricing: null               # {input_per_million: 1.25, output_per_million: 10.0} to show cost
+
+output:
+  formats: [console]          # console, json, markdown, sarif
+  directory: null
+  show_evidence: true
+
+logging:
+  level: WARNING
+  json_format: false
+  file: null
+
+# Ignore known findings. A reason is required. Expired suppressions stop working.
+suppressions: []
+#  - rule_id: MCP-FS-002
+#    server: filesystem
+#    target: read_file
+#    reason: The filesystem server is limited to the project folder.
+#    expires: 2027-01-01
+
+# Servers to scan when you run `mcp-scanner scan` with no target.
+servers: {}
+#  notes:
+#    command: python
+#    args: [server.py]

@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem@2026.8.31", "./projects"]
+    },
+    "notes": {
+      "command": "python",
+      "args": ["../tests/fixtures/servers/safe_server.py"]
+    },
+    "remote-docs": {
+      "url": "https://docs.example.com/mcp",
+      "headers": {"Authorization": "Bearer ${DOCS_TOKEN}"}
+    }
+  }
+}

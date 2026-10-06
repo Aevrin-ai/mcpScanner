@@ -1,0 +1,32 @@
+# Example custom rules. Load them with:  mcp-scanner scan <target> --rules-dir rules
+# Check them with:                         mcp-scanner rules validate rules
+#
+# A YAML rule searches the text an agent reads (tool descriptions, parameter text,
+# prompts, resources, and tool output) with a regular expression.
+# It cannot run code. See docs/writing-rules.md.
+
+rules:
+  - id: CUSTOM-INTERNAL-001
+    title: Tool mentions an internal host name
+    severity: medium
+    category: data-exfiltration
+    confidence: high
+    description: A tool talks about a host name that should never leave the company network.
+    why_it_matters: Internal host names in third party tools mean data may flow to a place it should not.
+    recommendation: Check where this tool sends data. Ask the vendor why it knows the internal host.
+    match:
+      pattern: "\\b[a-z0-9-]+\\.(?:corp|internal|intranet)\\.example\\.com\\b"
+      surfaces: [tool-description, param-description, instructions, tool-output]
+
+  - id: CUSTOM-PAYMENT-001
+    title: Tool can move money
+    severity: high
+    category: excessive-permissions
+    confidence: medium
+    description: A tool name or description talks about payments, transfers, or refunds.
+    recommendation: Keep human approval on for every call of this tool.
+    match:
+      patterns:
+        - "\\b(?:wire|bank)\\s+transfer\\b"
+        - "\\b(?:send|make|issue)\\s+(?:a\\s+)?(?:payment|refund)s?\\b"
+      surfaces: [tool-description, tool-name]
