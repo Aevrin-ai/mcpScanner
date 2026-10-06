@@ -1,0 +1,116 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aevrin-mcp-scanner"
+version = "1.0.0"
+description = "Aevrin MCP Scanner - find security problems in MCP servers and tools."
+readme = "README.md"
+license = "PolyForm-Noncommercial-1.0.0"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.11"
+authors = [{ name = "Aevrin" }]
+keywords = ["mcp", "security", "scanner", "model-context-protocol", "ai-agents"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+    "License :: Other/Proprietary License",
+]
+# Keep this list short. Each package is explained in docs/development.md.
+dependencies = [
+    "typer>=0.12,<1",          # command line interface
+    "rich>=13.7,<16",          # readable console output
+    "pydantic>=2.6,<3",        # data models and validation
+    "pyyaml>=6.0,<7",          # config, rules, skills, evals
+    "httpx>=0.27,<1",          # HTTP and SSE transports, optional OSV lookups
+    "psutil>=5.9,<8",          # process tree control and the sandbox watchdog
+    "python-dotenv>=1.0,<2",   # load a local .env file
+    "cryptography>=42",        # Ed25519 signatures for license keys and release integrity
+]
+
+[project.optional-dependencies]
+openai = ["openai>=1.40"]
+anthropic = ["anthropic>=0.40"]
+xai = ["xai-sdk>=1.0"]
+openrouter = ["openai>=1.40"]
+groq = ["openai>=1.40"]
+ai = ["openai>=1.40", "anthropic>=0.40", "xai-sdk>=1.0"]
+# The official MCP SDK is only needed to run the bundled test servers.
+servers = ["mcp>=2.3,<3"]
+dev = [
+    "mcp>=2.3,<3",
+    "pytest>=8.0",
+    "pytest-timeout>=2.3",
+    "ruff>=0.6",
+    "mypy>=1.10",
+    "types-PyYAML",
+    "types-psutil",
+]
+
+[project.scripts]
+mcp-scanner = "mcp_scanner.cli.app:main"
+
+[project.entry-points."aevrin_mcp_scanner.rules"]
+# Third party packages can add rules here. Built-in rules are found automatically.
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_scanner"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/skills" = "mcp_scanner/bundled/skills"
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "docs", "README.md", "LICENSE", "NOTICE", "COMMERCIAL-LICENSE.md", "TRADEMARKS.md", "config.example.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+timeout = 180
+markers = [
+    "network: needs internet access (downloads real MCP servers)",
+    "docker: needs a running Docker daemon",
+    "slow: takes more than a few seconds",
+    "ai: calls a real AI provider (needs an API key)",
+    "real_report_lookup: uses the real public report lookup (give it a mock HTTP client)",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+# E501: the formatter owns line length. UP042: keep `str, Enum` so str() output stays the same.
+# SIM105: a plain try/except/pass is easier to read for newcomers than contextlib.suppress.
+ignore = ["RUF012", "E501", "UP042", "SIM105"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["B011"]
+"src/evals/servers/**" = ["E501", "RUF001"]
+"tests/fixtures/**" = ["E501", "RUF001"]
+# These files hold lookalike and invisible characters on purpose.
+"src/mcp_scanner/rules/builtin/shadowing.py" = ["RUF001", "RUF002"]
+"src/mcp_scanner/rules/matching.py" = ["RUF001"]
+"src/mcp_scanner/analyzers/text.py" = ["RUF001"]
+"tests/**/*.py" = ["RUF001", "RUF003"]
+
+[tool.mypy]
+python_version = "3.11"
+packages = ["mcp_scanner"]
+mypy_path = "src"
+warn_unused_ignores = true
+warn_redundant_casts = true
+check_untyped_defs = true
+no_implicit_optional = true
+ignore_missing_imports = true
+plugins = ["pydantic.mypy"]

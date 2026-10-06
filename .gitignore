@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Secrets. Never commit real keys.
+.env
+*.key
+*.pem
+
+# Scanner output
+/reports/
+/targets/
+src/evals/reports/*
+!src/evals/reports/.gitkeep
+/src/reports/
+.mcp-scanner/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# License keys and private signing keys must never be committed or copied into an image.
+*.lic
+*.key.pem
+.aevrin-signing/

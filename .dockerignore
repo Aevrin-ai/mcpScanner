@@ -1,0 +1,14 @@
+.venv
+.git
+**/__pycache__
+.pytest_cache
+.mypy_cache
+.ruff_cache
+reports
+src/evals/reports
+.env
+*.pem
+*.key
+*.lic
+*.key.pem
+.aevrin-signing
