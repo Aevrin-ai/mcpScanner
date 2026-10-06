@@ -1,0 +1,59 @@
+{
+  "_about": "Packages and versions that public security advisories describe as malicious or compromised. Only public sources are used. A version of \"*\" means every version was malicious. Keep entries short and always add a reference.",
+  "updated": "2026-10-06",
+  "npm": [
+    {
+      "name": "postmark-mcp",
+      "versions": [">=1.0.16"],
+      "summary": "MCP server that silently added a BCC to every email it sent, copying mail to an outside address. Removed from npm.",
+      "references": [
+        "https://www.koi.security/blog/postmark-mcp-npm-malicious-backdoor-email-theft",
+        "https://security.snyk.io/vuln/SNYK-JS-POSTMARKMCP-13052679"
+      ]
+    },
+    {"name": "chalk", "versions": ["5.6.1"], "summary": "Compromised release (September 2025) with crypto wallet stealing code.", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "debug", "versions": ["4.4.2"], "summary": "Compromised release (September 2025) with crypto wallet stealing code.", "references": ["https://github.com/debug-js/debug/security/advisories/GHSA-4x49-vf9v-38px"]},
+    {"name": "ansi-styles", "versions": ["6.2.2"], "summary": "Compromised release (September 2025).", "references": ["https://github.com/chalk/ansi-styles/issues/92"]},
+    {"name": "ansi-regex", "versions": ["6.2.1"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "strip-ansi", "versions": ["7.1.1"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "supports-color", "versions": ["10.2.1"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "wrap-ansi", "versions": ["9.0.1"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "slice-ansi", "versions": ["7.1.1"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "color-convert", "versions": ["3.1.1"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "color-name", "versions": ["2.0.1"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "color-string", "versions": ["2.1.1"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "color", "versions": ["5.0.1"], "summary": "Compromised release (September 2025).", "references": ["https://app.semgrep.dev/blog/2025/chalk-debug-and-color-on-npm-compromised-in-new-supply-chain-attack"]},
+    {"name": "is-arrayish", "versions": ["0.3.3"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "simple-swizzle", "versions": ["0.2.3"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "error-ex", "versions": ["1.3.3"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "has-ansi", "versions": ["6.0.1"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "chalk-template", "versions": ["1.1.1"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "supports-hyperlinks", "versions": ["4.1.1"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "backslash", "versions": ["0.2.1"], "summary": "Compromised release (September 2025).", "references": ["https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised"]},
+    {"name": "duckdb", "versions": ["1.3.3"], "summary": "Compromised release (September 2025).", "references": ["https://app.semgrep.dev/blog/2025/chalk-debug-and-color-on-npm-compromised-in-new-supply-chain-attack"]},
+    {"name": "@duckdb/node-api", "versions": ["1.3.3"], "summary": "Compromised release (September 2025).", "references": ["https://app.semgrep.dev/blog/2025/chalk-debug-and-color-on-npm-compromised-in-new-supply-chain-attack"]},
+    {"name": "@duckdb/node-bindings", "versions": ["1.3.3"], "summary": "Compromised release (September 2025).", "references": ["https://app.semgrep.dev/blog/2025/chalk-debug-and-color-on-npm-compromised-in-new-supply-chain-attack"]},
+    {"name": "@duckdb/duckdb-wasm", "versions": ["1.29.2"], "summary": "Compromised release (September 2025).", "references": ["https://app.semgrep.dev/blog/2025/chalk-debug-and-color-on-npm-compromised-in-new-supply-chain-attack"]},
+    {
+      "name": "nx",
+      "versions": ["20.9.0", "20.10.0", "20.11.0", "20.12.0", "21.5.0", "21.6.0", "21.7.0", "21.8.0"],
+      "summary": "Compromised releases (August 2025, 's1ngularity') that stole tokens, SSH keys, and wallets through a postinstall script.",
+      "references": ["https://github.com/nrwl/nx/security/advisories/GHSA-cxm3-wv7p-598c"]
+    },
+    {"name": "@nx/devkit", "versions": ["20.9.0", "21.5.0"], "summary": "Compromised releases (August 2025).", "references": ["https://github.com/nrwl/nx/security/advisories/GHSA-cxm3-wv7p-598c"]},
+    {"name": "@nx/js", "versions": ["20.9.0", "21.5.0"], "summary": "Compromised releases (August 2025).", "references": ["https://github.com/nrwl/nx/security/advisories/GHSA-cxm3-wv7p-598c"]},
+    {"name": "@nx/node", "versions": ["20.9.0", "21.5.0"], "summary": "Compromised releases (August 2025).", "references": ["https://github.com/nrwl/nx/security/advisories/GHSA-cxm3-wv7p-598c"]},
+    {"name": "@nx/workspace", "versions": ["20.9.0", "21.5.0"], "summary": "Compromised releases (August 2025).", "references": ["https://github.com/nrwl/nx/security/advisories/GHSA-cxm3-wv7p-598c"]},
+    {"name": "@nx/eslint", "versions": ["21.5.0"], "summary": "Compromised release (August 2025).", "references": ["https://github.com/nrwl/nx/security/advisories/GHSA-cxm3-wv7p-598c"]},
+    {"name": "@nx/key", "versions": ["3.2.0"], "summary": "Compromised release (August 2025).", "references": ["https://github.com/nrwl/nx/security/advisories/GHSA-cxm3-wv7p-598c"]},
+    {"name": "@nx/enterprise-cloud", "versions": ["3.2.0"], "summary": "Compromised release (August 2025).", "references": ["https://github.com/nrwl/nx/security/advisories/GHSA-cxm3-wv7p-598c"]}
+  ],
+  "pypi": [
+    {
+      "name": "ultralytics",
+      "versions": ["8.3.41", "8.3.42", "8.3.43", "8.3.44", "8.3.45", "8.3.46"],
+      "summary": "Compromised releases (December 2024) that downloaded and ran a crypto miner.",
+      "references": ["https://osv.dev/vulnerability/PYSEC-2024-154"]
+    }
+  ]
+}
