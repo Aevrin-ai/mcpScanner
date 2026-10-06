@@ -1,0 +1,143 @@
+# Official releases. Runs only for version tags (v1.2.3).
+#
+#   1. release checks (license, branding, contact, keys, dependency licenses)
+#   2. sign the integrity manifest with the release key from the secret store
+#   3. build the wheel and sdist reproducibly (SOURCE_DATE_EPOCH)
+#   4. install the wheel and confirm it reports "official"
+#   5. SHA256SUMS, CycloneDX SBOM, and signed SLSA provenance + SBOM attestations (Sigstore)
+#   6. publish to PyPI with Trusted Publishing (PEP 740 attestations, no API token)
+#   7. build the Docker image, sign it with cosign (keyless), attest provenance and SBOM
+#
+# Secrets: AEVRIN_RELEASE_SIGNING_KEY (the release private key, PEM) and, if the key is
+# encrypted, AEVRIN_KEY_PASSPHRASE. Store them in a protected "release" environment.
+# Tip: pin each action to a full commit SHA.
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: write          # attach files to the GitHub release
+      id-token: write          # Sigstore signing for attestations
+      attestations: write
+      artifact-metadata: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install build cyclonedx-bom -e .
+      - name: Release checks
+        run: python src/scripts/check_licensing.py --release --deps
+      - name: Sign the release integrity manifest
+        env:
+          AEVRIN_RELEASE_SIGNING_KEY: ${{ secrets.AEVRIN_RELEASE_SIGNING_KEY }}
+          AEVRIN_KEY_PASSPHRASE: ${{ secrets.AEVRIN_KEY_PASSPHRASE }}
+        run: python src/scripts/licensing/sign_release.py
+      - name: Build (reproducible timestamps)
+        run: SOURCE_DATE_EPOCH="$(git log -1 --format=%ct)" python -m build --outdir packages
+      - name: The built wheel must report an official build
+        run: |
+          python -m venv /tmp/check
+          /tmp/check/bin/pip install packages/*.whl
+          /tmp/check/bin/mcp-scanner license verify-build
+      - name: SBOM and checksums
+        run: |
+          mkdir -p release
+          cyclonedx-py environment /tmp/check --of JSON -o release/sbom.cdx.json
+          cp packages/* release/
+          (cd release && sha256sum * > SHA256SUMS)
+      - name: Build provenance (SLSA, signed with Sigstore)
+        uses: actions/attest@v4
+        with:
+          subject-path: packages/*
+      - name: SBOM attestation
+        uses: actions/attest@v4
+        with:
+          subject-path: packages/*.whl
+          sbom-path: release/sbom.cdx.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: packages/
+      - name: Attach to the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" release/* --verify-tag \
+            --notes "Signed release. How to verify it is in docs/licensing.md."
+
+  pypi:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write          # Trusted Publishing; also creates PEP 740 attestations
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: packages
+          path: packages/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: packages/
+
+  image:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      packages: write
+      id-token: write          # cosign keyless signing and attestations
+      attestations: write
+      artifact-metadata: write
+    steps:
+      - name: Image name (registries need lowercase)
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - name: Sign the release integrity manifest (same bytes, same signature as the wheel)
+        env:
+          AEVRIN_RELEASE_SIGNING_KEY: ${{ secrets.AEVRIN_RELEASE_SIGNING_KEY }}
+          AEVRIN_KEY_PASSPHRASE: ${{ secrets.AEVRIN_KEY_PASSPHRASE }}
+        run: python src/scripts/licensing/sign_release.py
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ env.IMAGE }}:${{ github.ref_name }}
+          build-args: |
+            VERSION=${{ github.ref_name }}
+            REVISION=${{ github.sha }}
+          sbom: true
+          provenance: mode=max
+      - uses: sigstore/cosign-installer@v3
+      - name: Sign the image by digest (keyless, GitHub OIDC)
+        run: cosign sign --yes "${IMAGE}@${{ steps.push.outputs.digest }}"
+      - name: The image must report an official build
+        run: docker run --rm "${IMAGE}@${{ steps.push.outputs.digest }}" license verify-build
+      - name: Image provenance attestation
+        uses: actions/attest@v4
+        with:
+          subject-name: ${{ env.IMAGE }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true

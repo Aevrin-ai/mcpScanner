@@ -1,0 +1,44 @@
+# Every pull request and push: tests, plus the licensing and branding guard.
+# Tip: pin each action to a full commit SHA (Dependabot can keep them current).
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev,ai]"
+      - run: ruff check src tests
+      - run: ruff format --check src tests
+      - run: mypy
+      - run: pytest -q
+
+  licensing:
+    # Fails when the LICENSE, NOTICE, SPDX headers, branding hooks, or protected files
+    # (licensing code, keys, workflows) are removed or changed without updating the pins.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e . cyclonedx-bom
+      - name: Licensing, branding, and protected files
+        run: python src/scripts/check_licensing.py --deps
+      - name: SBOM of the runtime dependencies (CycloneDX)
+        run: cyclonedx-py environment --of JSON -o sbom.cdx.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.cdx.json

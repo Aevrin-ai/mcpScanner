@@ -1,0 +1,15 @@
+# Changes to licensing, branding, legal texts, release signing, and CI need review by the owners.
+# Replace @REPLACE-WITH-OWNER with your GitHub user or team (for example @aevrin/maintainers),
+# then turn on "Require review from Code Owners" in the branch protection rules.
+
+/LICENSE                               @REPLACE-WITH-OWNER
+/NOTICE                                @REPLACE-WITH-OWNER
+/COMMERCIAL-LICENSE.md                 @REPLACE-WITH-OWNER
+/TRADEMARKS.md                         @REPLACE-WITH-OWNER
+/.gitattributes                        @REPLACE-WITH-OWNER
+/src/mcp_scanner/branding.py           @REPLACE-WITH-OWNER
+/src/mcp_scanner/licensing/            @REPLACE-WITH-OWNER
+/src/scripts/check_licensing.py        @REPLACE-WITH-OWNER
+/src/scripts/protected-files.sha256    @REPLACE-WITH-OWNER
+/src/scripts/licensing/                @REPLACE-WITH-OWNER
+/.github/                              @REPLACE-WITH-OWNER
