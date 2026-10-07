@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# SPDX-License-Identifier: PolyForm-Strict-1.0.0
 # Copyright (c) 2026 Aevrin. See the LICENSE and NOTICE files.
 """Report formats. Add a format with one Reporter class and one line in REPORTERS."""
 

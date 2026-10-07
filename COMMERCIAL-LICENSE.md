@@ -1,8 +1,10 @@
 # Commercial license
 
-Aevrin MCP Scanner is free for **noncommercial** use under the
-[PolyForm Noncommercial License 1.0.0](LICENSE). Any **commercial** use needs a
-commercial license from Aevrin.
+Aevrin MCP Scanner is licensed under the
+[PolyForm Strict License 1.0.0](LICENSE), which allows noncommercial use only.
+Users of Aevrin products may additionally run it as distributed by Aevrin,
+including for commercial work ([AEVRIN-GRANT.md](AEVRIN-GRANT.md)). Any other
+**commercial** use needs a commercial license from Aevrin.
 
 This page explains who needs a commercial license and how licensing works. It is
 not itself a contract. The commercial terms are in a written agreement that you

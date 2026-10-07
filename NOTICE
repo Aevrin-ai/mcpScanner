@@ -1,12 +1,13 @@
 Aevrin MCP Scanner
 
 Required Notice: Copyright (c) 2026 Aevrin. All rights reserved, except as granted in the LICENSE file.
-Required Notice: Aevrin MCP Scanner is licensed under the PolyForm Noncommercial License 1.0.0 (https://polyformproject.org/licenses/noncommercial/1.0.0).
-Required Notice: Commercial use requires a separate commercial license from Aevrin. See COMMERCIAL-LICENSE.md.
+Required Notice: Aevrin MCP Scanner is licensed under the PolyForm Strict License 1.0.0 (https://polyformproject.org/licenses/strict/1.0.0).
+Required Notice: Aevrin grants users of Aevrin products the right to run this software as distributed by Aevrin. See AEVRIN-GRANT.md.
+Required Notice: Any other use requires a license from Aevrin. See COMMERCIAL-LICENSE.md.
 Required Notice: "Aevrin" and "Aevrin MCP Scanner" are trademarks of Aevrin. The LICENSE grants no trademark rights.
 
-The PolyForm Noncommercial License requires anyone who passes on a copy of any
-part of this software to also pass on the license terms (or their URL) and every
+The PolyForm Strict License requires anyone who passes on a copy of any part
+of this software to also pass on the license terms (or their URL) and every
 line above that begins with "Required Notice:".
 
 Third-party components are licensed under their own terms. See

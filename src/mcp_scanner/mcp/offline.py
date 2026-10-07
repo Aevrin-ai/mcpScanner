@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# SPDX-License-Identifier: PolyForm-Strict-1.0.0
 # Copyright (c) 2026 Aevrin. See the LICENSE and NOTICE files.
 """Load a server inventory from a JSON or YAML file, without running anything.
 

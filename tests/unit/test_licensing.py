@@ -331,7 +331,7 @@ def test_every_report_carries_branding_and_license(fmt: str) -> None:
     report = ScanReport(scanner_version=__version__)
     assert report.product is None  # as if the engine step that fills it had been removed
     text = get_reporter(fmt).render(report)
-    assert "Aevrin" in text and "noncommercial" in text.lower()
+    assert "Aevrin" in text and "polyform strict" in text.lower()
     assert report.product is not None and report.product.build == "development"
 
 

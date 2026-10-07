@@ -7,7 +7,7 @@ name = "aevrin-mcp-scanner"
 version = "1.0.0"
 description = "Aevrin MCP Scanner - find security problems in MCP servers and tools."
 readme = "README.md"
-license = "PolyForm-Noncommercial-1.0.0"
+license = "LicenseRef-PolyForm-Strict-1.0.0"
 license-files = ["LICENSE", "NOTICE"]
 requires-python = ">=3.11"
 authors = [{ name = "Aevrin" }]

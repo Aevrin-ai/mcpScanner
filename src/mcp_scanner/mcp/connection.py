@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# SPDX-License-Identifier: PolyForm-Strict-1.0.0
 # Copyright (c) 2026 Aevrin. See the LICENSE and NOTICE files.
 """Connect to one MCP server, whatever its transport.
 

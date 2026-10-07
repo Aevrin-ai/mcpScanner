@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# SPDX-License-Identifier: PolyForm-Strict-1.0.0
 # Copyright (c) 2026 Aevrin. See the LICENSE and NOTICE files.
 """The scan engine. It only calls the stages in order. Each stage does its own work.
 

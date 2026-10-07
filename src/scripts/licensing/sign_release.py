@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# SPDX-License-Identifier: PolyForm-Strict-1.0.0
 # Copyright (c) 2026 Aevrin. See the LICENSE and NOTICE files.
 """Write and sign the release integrity manifest before building a release. Run in CI only.
 

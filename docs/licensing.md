@@ -20,8 +20,9 @@ the code. The attacks and limits are in [licensing-threat-model.md](licensing-th
 
 ## 1. The license
 
-**PolyForm Noncommercial License 1.0.0** (SPDX `PolyForm-Noncommercial-1.0.0`), plus a separate
-paid commercial license. It is a source-available license, not an open source license.
+**PolyForm Strict License 1.0.0** (SPDX `PolyForm-Strict-1.0.0`), plus an explicit grant
+for users of Aevrin products ([AEVRIN-GRANT.md](../AEVRIN-GRANT.md)) and a separate paid
+commercial license for everyone else. It is a source-available license, not open source.
 
 ### Why this license
 
@@ -30,16 +31,17 @@ noncommercial users. We compared the common choices:
 
 | License | Free commercial use | Change and share | Notices protected | License key protected | Hosted (SaaS) use | OSI approved | Notes |
 |---|---|---|---|---|---|---|---|
-| **PolyForm Noncommercial** (chosen) | No | Yes, noncommercial only | "Required Notice:" lines must stay | Through the commercial agreement | Needs a commercial license | No | Plain-language, written by licensing lawyers |
-| PolyForm Strict | No | No changes, no sharing | Yes (no changes at all) | Yes (no changes at all) | Needs a commercial license | No | Strongest, but no forks or patches even for hobby use |
+| PolyForm Noncommercial (chosen at first) | No | Yes, noncommercial only | "Required Notice:" lines must stay | Through the commercial agreement | Needs a commercial license | No | Plain-language, written by licensing lawyers |
+| **PolyForm Strict** (chosen) | No | No changes, no sharing | Yes (no changes at all) | Yes (no changes at all) | Needs a commercial license | No | Strongest; Aevrin users get a separate grant to run it inside Aevrin products |
 | Elastic License 2.0 | **Yes** | Yes | Yes, explicitly | Yes, explicitly | Only managed services are banned | No | Does not stop free commercial use |
 | Business Source License 1.1 | Non-production only | Yes | Must show the license | No | Depends on the grant | No | Each version becomes open source after at most 4 years |
 | Functional Source License | **Yes**, except competing use | Yes | Basic | No | Only competing use is banned | No | Becomes Apache or MIT after 2 years |
 | SSPL | Yes | Yes | Basic | No | Forces the whole service to be open | No | Built for databases offered as a service |
 | MIT, Apache 2.0 | Yes | Yes | Copyright notice only | No | Yes | Yes | Open source, no restriction on commercial use |
 
-Only the two PolyForm licenses stop free commercial use. Noncommercial was chosen over Strict so
-that people can still study, fix, and share the code for noncommercial work.
+Only the two PolyForm licenses stop free commercial use. Noncommercial was the first choice;
+the project later moved to Strict so that nobody can change or redistribute the engine, and
+users of Aevrin products get what they need through the explicit grant instead.
 
 ### What you may and may not do
 
@@ -57,7 +59,7 @@ that people can still study, fix, and share the code for noncommercial work.
 Every source file starts with:
 
 ```python
-# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# SPDX-License-Identifier: PolyForm-Strict-1.0.0
 # Copyright (c) 2026 Aevrin. See the LICENSE and NOTICE files.
 ```
 
@@ -71,7 +73,7 @@ Branding comes from one module, `src/mcp_scanner/branding.py`, and shows up in:
 | `mcp-scanner version` | Name, version, copyright, license status, build status |
 | Every console, Markdown, JSON, and SARIF report | Name, version, copyright, license status, build status (`product` block) |
 | HTTP requests to remote MCP servers | `User-Agent: aevrin-mcp-scanner/<version>` |
-| Package metadata | `License-Expression: PolyForm-Noncommercial-1.0.0`, LICENSE and NOTICE inside the wheel |
+| Package metadata | `License-Expression: PolyForm-Strict-1.0.0`, LICENSE and NOTICE inside the wheel |
 | Docker image | OCI labels (`vendor`, `licenses`, `version`, `revision`), LICENSE and NOTICE in `/usr/share/doc` |
 
 Reports get the block in two independent ways: the scan engine adds it, and every reporter adds it
@@ -129,7 +131,7 @@ key, and the scanner cannot know whether a given run is commercial. Instead, the
 
 | State | Every report says |
 |---|---|
-| No key | `Licensed for noncommercial use only (PolyForm Noncommercial 1.0.0). Commercial use requires a commercial license from Aevrin.` |
+| No key | `Licensed under PolyForm Strict 1.0.0. Aevrin users may run it inside Aevrin products (see AEVRIN-GRANT.md). Any other use requires a license from Aevrin.` |
 | Valid | `Licensed to ACME Corp (commercial license L-2026-0042, valid until 2027-10-06).` |
 | Expired, wrong version, forged, revoked, clock problem | `License problem: <reason>. Running under the noncommercial terms.` plus the notice |
 

@@ -139,9 +139,10 @@ See [docs/risk-scoring.md](docs/risk-scoring.md).
 
 Aevrin MCP Scanner is source-available, not open source. Copyright (c) 2026 Aevrin.
 
-- **Noncommercial use is free** under the [PolyForm Noncommercial License 1.0.0](LICENSE)
-  (SPDX: `PolyForm-Noncommercial-1.0.0`): personal study, research, hobby projects, and the
-  noncommercial organizations the license names. You may change and share it for those uses.
+- **Licensed under the [PolyForm Strict License 1.0.0](LICENSE)**
+  (SPDX: `PolyForm-Strict-1.0.0`): noncommercial use is allowed; changing or
+  redistributing the software is not. Users of Aevrin products may run it as
+  distributed by Aevrin, including for commercial work ([AEVRIN-GRANT.md](AEVRIN-GRANT.md)).
 - **Commercial use needs a commercial license** from Aevrin. See [COMMERCIAL-LICENSE.md](COMMERCIAL-LICENSE.md).
 - Every copy must keep the "Required Notice:" lines in [NOTICE](NOTICE). The names and logos are
   covered by [TRADEMARKS.md](TRADEMARKS.md).

@@ -9,7 +9,7 @@
 # Use:    docker run --rm aevrin-mcp-scanner scan /work/tools.json
 # More:   docs/docker.md
 #
-# License: PolyForm Noncommercial 1.0.0. Commercial use needs a license key, given at
+# License: PolyForm Strict 1.0.0. Commercial use needs a license key, given at
 # run time and never baked into the image: a Docker secret at /run/secrets/aevrin_license,
 # or the AEVRIN_LICENSE variable. See docs/licensing.md. No private signing key is ever
 # part of this image. Official images are signed with cosign by the release workflow.
@@ -26,7 +26,7 @@ ARG REVISION=unknown
 LABEL org.opencontainers.image.title="Aevrin MCP Scanner" \
       org.opencontainers.image.description="Find security problems in MCP servers and tools." \
       org.opencontainers.image.vendor="Aevrin" \
-      org.opencontainers.image.licenses="PolyForm-Noncommercial-1.0.0" \
+      org.opencontainers.image.licenses="PolyForm-Strict-1.0.0" \
       org.opencontainers.image.version="${VERSION}" \
       org.opencontainers.image.revision="${REVISION}"
 

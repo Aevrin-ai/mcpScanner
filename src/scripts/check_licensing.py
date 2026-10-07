@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# SPDX-License-Identifier: PolyForm-Strict-1.0.0
 # Copyright (c) 2026 Aevrin. See the LICENSE and NOTICE files.
 """CI guard for licensing, branding, and protected files. Fails on accidental removal or change.
 
@@ -27,14 +27,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
-# sha256 of the official PolyForm Noncommercial 1.0.0 text (polyformproject.org, Markdown form).
-POLYFORM_NC_SHA256 = "ffcca38841adb694b6f380647e15f17c446a4d1656fed51a1e2041d064c94cc8"
-SPDX = "PolyForm-Noncommercial-1.0.0"
-HEADER = "# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0"
+# sha256 of the official PolyForm Strict 1.0.0 text (polyformproject.org, Markdown form).
+POLYFORM_STRICT_SHA256 = "9eb48619fbc193ab7bb327b090cfcc703000265b83e670f81f231d0b1c43c56e"
+SPDX = "PolyForm-Strict-1.0.0"
+HEADER = "# SPDX-License-Identifier: PolyForm-Strict-1.0.0"
 REQUIRED_NOTICES = (
     "Required Notice: Copyright (c) 2026 Aevrin.",
-    "Required Notice: Aevrin MCP Scanner is licensed under the PolyForm Noncommercial License 1.0.0",
-    "Required Notice: Commercial use requires a separate commercial license from Aevrin.",
+    "Required Notice: Aevrin MCP Scanner is licensed under the PolyForm Strict License 1.0.0",
+    "Required Notice: Aevrin grants users of Aevrin products the right to run this software",
+    "Required Notice: Any other use requires a license from Aevrin.",
     'Required Notice: "Aevrin" and "Aevrin MCP Scanner" are trademarks of Aevrin.',
 )
 PINS = ROOT / "src" / "scripts" / "protected-files.sha256"
@@ -102,8 +103,8 @@ def check_legal(errors: list[str]) -> None:
     license_file = ROOT / "LICENSE"
     if not license_file.is_file():
         errors.append("LICENSE is missing")
-    elif hashlib.sha256(text(license_file).encode()).hexdigest() != POLYFORM_NC_SHA256:
-        errors.append("LICENSE is not the official PolyForm Noncommercial 1.0.0 text")
+    elif hashlib.sha256(text(license_file).encode()).hexdigest() != POLYFORM_STRICT_SHA256:
+        errors.append("LICENSE is not the official PolyForm Strict 1.0.0 text")
     notice = text(ROOT / "NOTICE") if (ROOT / "NOTICE").is_file() else ""
     for line in REQUIRED_NOTICES:
         if line not in notice:
@@ -123,8 +124,10 @@ def check_headers(errors: list[str]) -> None:
 
 def check_metadata(errors: list[str]) -> None:
     project = tomllib.loads(text(ROOT / "pyproject.toml"))["project"]
-    if project.get("license") != SPDX:
-        errors.append(f"pyproject.toml license must be {SPDX}")
+    # PolyForm Strict is not in the SPDX license list, so packaging metadata
+    # names it as a LicenseRef expression (PEP 639).
+    if project.get("license") != f"LicenseRef-{SPDX}":
+        errors.append(f"pyproject.toml license must be LicenseRef-{SPDX}")
     if not {"LICENSE", "NOTICE"} <= set(project.get("license-files", [])):
         errors.append("pyproject.toml license-files must include LICENSE and NOTICE")
     docker = text(ROOT / "Dockerfile")

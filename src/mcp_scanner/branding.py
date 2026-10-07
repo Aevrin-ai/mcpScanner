@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# SPDX-License-Identifier: PolyForm-Strict-1.0.0
 # Copyright (c) 2026 Aevrin. See the LICENSE and NOTICE files.
 """Who makes this software, and the notices every copy and every report keeps.
 
@@ -14,14 +14,15 @@ PRODUCT_ID = "aevrin-mcp-scanner"  # in license keys, the User-Agent, and packag
 VENDOR = "Aevrin"
 COPYRIGHT = "Copyright (c) 2026 Aevrin"
 
-LICENSE_ID = "PolyForm-Noncommercial-1.0.0"  # SPDX identifier
-LICENSE_NAME = "PolyForm Noncommercial License 1.0.0"
-LICENSE_URL = "https://polyformproject.org/licenses/noncommercial/1.0.0"
+LICENSE_ID = "PolyForm-Strict-1.0.0"  # SPDX identifier
+LICENSE_NAME = "PolyForm Strict License 1.0.0"
+LICENSE_URL = "https://polyformproject.org/licenses/strict/1.0.0"
 
-# Shown when no valid commercial license is active. Noncommercial use needs no key.
+# Shown when no valid commercial license is active.
 NONCOMMERCIAL_NOTICE = (
-    "Licensed for noncommercial use only (PolyForm Noncommercial 1.0.0). "
-    "Commercial use requires a commercial license from Aevrin."
+    "Licensed under PolyForm Strict 1.0.0. Aevrin users may run it inside "
+    "Aevrin products (see AEVRIN-GRANT.md). Any other use requires a "
+    "license from Aevrin."
 )
 
 
